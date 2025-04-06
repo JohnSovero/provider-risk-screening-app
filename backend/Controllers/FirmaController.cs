@@ -2,10 +2,9 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authorization;
 using backend.Services;
 
-namespace backend.Controllers
-{
+namespace backend.Controllers{
     [ApiController]
-    [Route("api/[controller]")]
+    [Route("[controller]")]
     [Authorize]
     public class FirmaController : ControllerBase
     {

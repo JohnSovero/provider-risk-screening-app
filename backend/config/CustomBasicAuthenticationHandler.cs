@@ -5,7 +5,7 @@ using System.Text.Encodings.Web;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.Extensions.Options;
 
-namespace backend.Handlers
+namespace backend.config
 {
     public class CustomBasicAuthenticationHandler : AuthenticationHandler<AuthenticationSchemeOptions>
     {
