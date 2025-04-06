@@ -1,0 +1,33 @@
+<h2 mat-dialog-title>Screening: {{ data.supplier.name }}</h2>
+<mat-dialog-content>
+    <p>Selecciona de 1 a 3 fuentes para hacer el cruce:</p>
+
+    <mat-selection-list [(ngModel)]="selectedSources" (selectionChange)="onSourceChange()">
+        <mat-list-option *ngFor="let source of sources" [value]="source">
+            {{ source }}
+        </mat-list-option>
+    </mat-selection-list>
+
+    <mat-progress-spinner *ngIf="isLoading" mode="indeterminate"></mat-progress-spinner>
+
+    <div *ngIf="results.length > 0" class="mt-4">
+        <table mat-table [dataSource]="results" class="mat-elevation-z8">
+
+            <ng-container matColumnDef="source">
+                <th mat-header-cell *matHeaderCellDef> Fuente </th>
+                <td mat-cell *matCellDef="let element"> {{ element.source }} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="match">
+                <th mat-header-cell *matHeaderCellDef> Resultado </th>
+                <td mat-cell *matCellDef="let element"> {{ element.match }} </td>
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="['source', 'match']"></tr>
+            <tr mat-row *matRowDef="let row; columns: ['source', 'match'];"></tr>
+        </table>
+    </div>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+    <button mat-button mat-dialog-close>Cerrar</button>
+</mat-dialog-actions>

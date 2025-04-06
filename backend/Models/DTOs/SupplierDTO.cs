@@ -2,7 +2,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace backend.Models
 {
-    public class ProviderDto
+    public class SupplierDto
     {
         [Required(ErrorMessage = "La razón social es obligatorio.")]
         [StringLength(100, ErrorMessage = "La razón social no puede exceder los 100 caracteres.")]

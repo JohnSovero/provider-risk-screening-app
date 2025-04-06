@@ -7,6 +7,6 @@ namespace backend.Infraestructure
     {
         public AppDbContext(DbContextOptions<AppDbContext> options) : base(options) { }
 
-        public DbSet<Provider> Providers { get; set; }
+        public DbSet<Supplier> Suppliers { get; set; }
     }
 }

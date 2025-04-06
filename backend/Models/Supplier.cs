@@ -1,9 +1,8 @@
-using System.ComponentModel.DataAnnotations;
 using System.Text.Json.Serialization;
 
 namespace backend.Models
 {
-    public class Provider{
+    public class Supplier{
         public Guid Id { get; set; }
 
         [JsonPropertyName("businessName")]
