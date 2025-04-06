@@ -1,4 +1,5 @@
 using AspNetCoreRateLimit;
+using backend.Config;
 using backend.Infraestructure;
 using backend.Middleware;
 using backend.Services;
@@ -7,7 +8,10 @@ using Microsoft.EntityFrameworkCore;
 var builder = WebApplication.CreateBuilder(args);
 
 // Services
-builder.Services.AddControllers();
+builder.Services.AddControllers(options =>
+{
+    options.Filters.Add<RestExceptionHandler>(); // Agregar RestExceptionHandler globalmente
+});
 builder.Services.AddTransient<FirmaService>();
 builder.Services.AddMemoryCache();
 builder.Services.AddInMemoryRateLimiting();
