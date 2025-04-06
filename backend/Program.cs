@@ -7,6 +7,7 @@ using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
+
 // Services
 builder.Services.AddControllers(options =>
 {
@@ -37,5 +38,4 @@ app.UseAuthentication();
 app.UseIpRateLimiting();
 app.UseAuthorization();
 app.MapControllers();
-
 app.Run();
