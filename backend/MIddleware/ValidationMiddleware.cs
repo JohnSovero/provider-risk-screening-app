@@ -1,4 +1,4 @@
-namespace backend.MIddleware
+namespace backend.Middleware
 {
     public class ValidationMiddleware(RequestDelegate next)
     {
