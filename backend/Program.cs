@@ -57,8 +57,7 @@ app.UseCors("AllowAll");
 app.UseSwagger();
 app.UseSwaggerUI();
 
-// Middleware for error handling
-app.UseMiddleware<ValidationMiddleware>();
+
 
 // Configuration of authentication and authorization
 app.UseAuthentication();

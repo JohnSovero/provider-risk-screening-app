@@ -35,7 +35,7 @@ export class SupplierService {
     
     // Method to update a supplier in the backend
     updateSupplier(supplier: SupplierResponse): Observable<SupplierResponse> {
-        return this.http.put<SupplierResponse>(`${environment.apiURL}/supplier/${supplier.id}`, supplier)
+        return this.http.put<SupplierResponse>(`${environment.apiURL}/supplier?id=${supplier.id}`, supplier)
             .pipe(
                 map((updatedSupplier: SupplierResponse) => {
                     return updatedSupplier;
@@ -45,7 +45,7 @@ export class SupplierService {
 
     // Method to delete a supplier in the backend
     deleteSupplier(supplierId: string): Observable<void> {
-        return this.http.delete<void>(`${environment.apiURL}/supplier/${supplierId}`)
+        return this.http.delete<void>(`${environment.apiURL}/supplier?id=${supplierId}`)
             .pipe(
                 map(() => {
                     return;

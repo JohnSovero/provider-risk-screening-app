@@ -34,6 +34,11 @@ export class SupplierListComponent implements OnInit {
     this.supplierService.getAllSuppliers().subscribe({
       next: (suppliers: SupplierResponse[]) => {  
         suppliers.sort((a, b) => new Date(b.lastEdited).getTime() - new Date(a.lastEdited).getTime());
+        //put lastedited to format fecha y hora
+        suppliers.forEach(supplier => {
+          const date = new Date(supplier.lastEdited);
+          supplier.lastEdited = `${date.toLocaleDateString()} ${date.toLocaleTimeString()}`;
+        });
         this.dataSource.data = suppliers;
 
       },

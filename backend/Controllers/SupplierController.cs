@@ -17,7 +17,7 @@ namespace backend.Controllers{
 
         // Endpoint to get Supplier by ID
         [HttpGet("{id}")]
-        public async Task<IActionResult> GetSupplierById(Guid id){
+        public async Task<IActionResult> GetSupplierById([FromQuery] Guid id){
             var Supplier = await _service.GetSupplierById(id);
             return Supplier is null ? NotFound() : Ok(Supplier);
         }
@@ -30,17 +30,17 @@ namespace backend.Controllers{
         }
 
         // Endpoint to update an existing Supplier
-        [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateSupplier(Guid id, [FromBody] SupplierDto dto){
+        [HttpPut]
+        public async Task<IActionResult> UpdateSupplier([FromQuery] Guid id, [FromBody] SupplierDto dto){
             var updated = await _service.UpdateSupplier(id, dto);
             return updated is null ? NotFound() : Ok(updated);
         }
 
         // Endpoint to delete a Supplier
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteSupplier(Guid id){
+        [HttpDelete]
+        public async Task<IActionResult> DeleteSupplier([FromQuery] Guid id){
             var deleted = await _service.DeleteSupplier(id);
-            return deleted ? NoContent() : NotFound();
+            return deleted ? Ok() : NotFound();
         }
     }
 }
