@@ -18,8 +18,21 @@ namespace backend.Services
                 });
 
                 await using var page = await browser.NewPageAsync();
-                await page.GoToAsync("https://projects.worldbank.org/en/projects-operations/procurement/debarred-firms", WaitUntilNavigation.Networkidle2);
+                await page.GoToAsync("https://projects.worldbank.org/en/projects-operations/procurement/debarred-firms", new NavigationOptions
+                {
+                    Timeout = 30000,
+                    WaitUntil = new[] { WaitUntilNavigation.Networkidle2 }
+                });
+                await page.WaitForSelectorAsync("#k-debarred-firms .k-grid-content table tbody tr", new WaitForSelectorOptions
+                {
+                    Timeout = 30000
+                });
 
+                if (page.IsClosed)
+                {
+                    Console.WriteLine("La página se cerró antes de tiempo.");
+                    return new List<Firm>();
+                }
                 var data = await page.EvaluateFunctionAsync(@"(nombre) => {
                     const rows = document.querySelectorAll('#k-debarred-firms .k-grid-content table tbody tr');
                     return Array.from(rows).map(row => {
@@ -35,14 +48,24 @@ namespace backend.Services
                         } : null;
                     }).filter(row => row !== null)
                     .filter(firm => firm.firmName && firm.firmName.toLowerCase().includes(nombre.toLowerCase()));
-                }", nombre); // Filtrado directamente en la evaluación
+                }", nombre);
 
                 var lista = JsonSerializer.Deserialize<List<Firm>>(data?.ToString() ?? "[]");
                 return lista ?? new List<Firm>();
             }
+            catch (PuppeteerException pex)
+            {
+                Console.WriteLine($"Error de Puppeteer: {pex.Message}");
+                return new List<Firm>();
+            }
+            catch (TimeoutException tex)
+            {
+                Console.WriteLine($"Timeout: {tex.Message}");
+                return new List<Firm>();
+            }
             catch (Exception ex)
             {
-                Console.WriteLine($"Error al obtener firmas: {ex.Message}");
+                Console.WriteLine($"Error general: {ex.Message}");
                 return new List<Firm>();
             }
         }

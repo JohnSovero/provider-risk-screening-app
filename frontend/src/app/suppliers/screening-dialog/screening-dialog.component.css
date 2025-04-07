@@ -1,0 +1,14 @@
+/* Contenedor del encabezado */
+.dialog-header {
+    display: flex; /* Usar flexbox para alinear los elementos horizontalmente */
+    justify-content: space-between; /* Alinear los elementos a los extremos */
+    align-items: center; /* Centrar verticalmente */
+    margin-bottom: 16px; /* Espaciado inferior */
+}
+
+/* Estilo para el texto de Total Hits */
+.total-hits {
+    font-size: 16px;
+    font-weight: bold;
+    color: #555; /* Color del texto */
+}

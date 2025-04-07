@@ -10,6 +10,7 @@ import { FormsModule } from '@angular/forms';
 import { MatSelectModule } from '@angular/material/select';  // Importa MatSelectModule
 import { ScrapperService } from '../../scrapper/services/scrapper.service';
 import { AddEditSupplierDialogComponent } from '../../add-edit-provider-dialog/add-edit-supplier-dialog.component';
+import { ScreeningDialogComponent } from '../screening-dialog/screening-dialog.component';
 
 @Component({
   imports: [CommonModule, MatTableModule, MatDialogModule, MatFormFieldModule, MatInputModule, FormsModule, MatSelectModule],
@@ -104,10 +105,18 @@ export class SupplierListComponent implements OnInit {
   }
 
   scrappedSupplier(supplier: SupplierResponse): void {
-    console.log('Scrapping supplier:', supplier);
     this.scrapperService.getScrappedByName(supplier.businessName).subscribe({
       next: (response) => {
         console.log('Screening results:', response);
+        this.dialog.open(ScreeningDialogComponent, {
+          maxWidth: '95%',
+          minWidth: '90%',
+
+          data: {
+            totalHits: response.totalHits,
+            resultados: response.resultados || []
+          }
+        });
       },
       error: (error) => {
         console.error('Error al realizar screening:', error);

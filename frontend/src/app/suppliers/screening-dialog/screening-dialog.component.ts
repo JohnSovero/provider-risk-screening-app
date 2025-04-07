@@ -1,49 +1,29 @@
-import { HttpClient } from '@angular/common/http';
 import { Component, Inject, OnInit } from '@angular/core';
-import { MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { MaterialModule } from '../../material/material.module';
-import { MatListModule } from '@angular/material/list';
-import { FormsModule } from '@angular/forms';
-import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MAT_DIALOG_DATA, MatDialogModule } from '@angular/material/dialog';
+import { MatTableModule } from '@angular/material/table';
 import { CommonModule } from '@angular/common';
+import { SupplierResponse } from '../interfaces/supplier.interface';
 
 @Component({
   selector: 'app-screening-dialog',
-  imports: [
-    CommonModule,
-    MaterialModule,
-    MatListModule,
-    FormsModule,
-    MatProgressSpinnerModule,
-  ],
   templateUrl: './screening-dialog.component.html',
-  styleUrl: './screening-dialog.component.css'
+  imports: [CommonModule, MatTableModule, MatDialogModule],
+  styleUrls: ['./screening-dialog.component.css'],
+  standalone: true
 })
+
 export class ScreeningDialogComponent implements OnInit {
-  sources = ['SUNAT', 'OSCE', 'INTERPOL'];
-  selectedSources: string[] = [];
-  results: any[] = [];
-  isLoading = false;
+  screeningResults: SupplierResponse[] = [];
+  totalHits: number = 0;
+  displayedColumns: string[] = ['firmName', 'address', 'country', 'fromDate', 'toDate', 'grounds'];
 
   constructor(
-    @Inject(MAT_DIALOG_DATA) public data: { supplier: any },
-    private http: HttpClient
+    @Inject(MAT_DIALOG_DATA) public data: { totalHits: number, resultados: SupplierResponse[] }
   ) { }
 
-  ngOnInit(): void { }
-
-  onSourceChange() {
-    if (this.selectedSources.length >= 1 && this.selectedSources.length <= 3) {
-      this.isLoading = true;
-      this.http.post('/firma', {
-        supplier: this.data.supplier,
-        sources: this.selectedSources,
-      }).subscribe((res: any) => {
-        this.results = res;
-        this.isLoading = false;
-      }, () => {
-        this.isLoading = false;
-      });
-    }
+  ngOnInit(): void {
+    this.screeningResults = this.data.resultados;
+    this.totalHits = this.data.totalHits;
+    console.log(this.totalHits);
   }
 }

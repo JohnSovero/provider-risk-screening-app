@@ -53,11 +53,16 @@
         <mat-form-field appearance="fill">
             <mat-label>Website</mat-label>
             <input matInput formControlName="website" required>
-            <mat-error
-                *ngIf="supplierForm.get('website')?.touched && supplierForm.get('website')?.hasError('required')">
-                Website is required
+        
+            <mat-error *ngIf="supplierForm.get('website')?.touched && supplierForm.get('website')?.hasError('required')">
+                El sitio web es obligatorio.
+            </mat-error>
+        
+            <mat-error *ngIf="supplierForm.get('website')?.touched && supplierForm.get('website')?.hasError('pattern')">
+                https://ejemplo.com
             </mat-error>
         </mat-form-field>
+
 
         <mat-form-field appearance="fill">
             <mat-label>Address</mat-label>

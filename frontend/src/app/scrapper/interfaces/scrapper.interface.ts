@@ -1,5 +1,5 @@
 export interface ScrapperResponse {
-    totalHint: number;
+    totalHits: number;
     resultados: ScrapperResult[];
 }
 

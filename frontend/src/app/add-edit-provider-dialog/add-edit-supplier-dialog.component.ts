@@ -24,13 +24,13 @@ export class AddEditSupplierDialogComponent {
     this.supplierForm = this.fb.group({
       businessName: [this.data?.supplier.businessName || '', [Validators.required]],
       tradeName: [this.data?.supplier.tradeName || '', [Validators.required]],
-      taxId: [this.data?.supplier.taxId || '', [Validators.required]],
-      phone: [this.data?.supplier.phone || '', [Validators.required]],
-      email: [this.data?.supplier.email || '', [Validators.required]],
-      website: [this.data?.supplier.website || '', [Validators.required]],
+      taxId: [this.data?.supplier.taxId || '', [Validators.required, Validators.pattern(/^\d{11}$/)]],
+      phone: [this.data?.supplier.phone || '', [Validators.required,]],
+      email: [this.data?.supplier.email || '', [Validators.required, Validators.email]],
+      website: [this.data?.supplier.website || '', [Validators.required, Validators.pattern(/^(https?:\/\/)?([\w\-]+\.)+[\w\-]+(\/[\w\-._~:/?#[\]@!$&'()*+,;=]*)?$/)]],
       address: [this.data?.supplier.address || '', [Validators.required]],
       country: [this.data?.supplier.country || '', [Validators.required]],
-      annualBilling: [this.data?.supplier.annualBilling || '', [Validators.required]],
+      annualBilling: [this.data?.supplier.annualBilling || '', [Validators.required,]]
     });
   }
 

@@ -12,7 +12,7 @@ export class ScrapperService {
     private http = inject(HttpClient);
 
     // Method to get scrapped by name
-    getScrappedByName(name: string): Observable<any> {
+    getScrappedByName(name: string): Observable<ScrapperResponse> {
         console.log("ScrapperService: getScrappedByName called with name:", name);
         return this.http.get<ScrapperResponse>(`${environment.apiURL}/Firma?nombre=${name}`)
             .pipe(
