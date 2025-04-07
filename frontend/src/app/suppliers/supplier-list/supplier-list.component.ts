@@ -10,7 +10,6 @@ import { SupplierService } from '../services/supplier.service';
   imports: [],
   templateUrl: './supplier-list.component.html',
   styleUrl: './supplier-list.component.css',
-  standalone: false,
 })
 export class SupplierListComponent implements OnInit, AfterViewInit {
   displayedColumns: string[] = ['name', 'updatedAt', 'actions'];
