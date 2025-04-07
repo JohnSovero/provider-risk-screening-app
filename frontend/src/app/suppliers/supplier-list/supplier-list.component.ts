@@ -11,9 +11,10 @@ import { MatSelectModule } from '@angular/material/select';  // Importa MatSelec
 import { ScrapperService } from '../../scrapper/services/scrapper.service';
 import { AddEditSupplierDialogComponent } from '../../add-edit-provider-dialog/add-edit-supplier-dialog.component';
 import { ScreeningDialogComponent } from '../screening-dialog/screening-dialog.component';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 @Component({
-  imports: [CommonModule, MatTableModule, MatDialogModule, MatFormFieldModule, MatInputModule, FormsModule, MatSelectModule],
+  imports: [CommonModule, MatTableModule, MatDialogModule, MatFormFieldModule, MatInputModule, FormsModule, MatSelectModule, MatProgressSpinnerModule],
   templateUrl: './supplier-list.component.html',
   styleUrls: ['./supplier-list.component.css'],
   encapsulation: ViewEncapsulation.None
@@ -23,6 +24,7 @@ export class SupplierListComponent implements OnInit {
   dataSource = new MatTableDataSource<SupplierResponse>([]);
   currentSupplier: SupplierResponse = { id: '', businessName: '', tradeName: '', taxId: '', phone: '', email: '', website: '', address: '', country: '', annualBilling: 0, lastEdited: '' };
   selectedEntities: { [supplierId: string]: string[] } = {};
+  isLoading: boolean = false;
 
   constructor(
     private supplierService: SupplierService,
@@ -118,17 +120,19 @@ export class SupplierListComponent implements OnInit {
   }
 
   scrappedSupplier(supplier: SupplierResponse, entidades: string[]): void {
-    if(entidades.length === 0) {
+    if (entidades.length === 0) {
       alert('No se seleccionaron entidades para el scrapping');
       return;
     }
+
+    this.isLoading = true;
+
     this.scrapperService.getScrappedByName(supplier.businessName, entidades).subscribe({
       next: (response) => {
-        console.log('Screening results:', response);
+        this.isLoading = false;
         this.dialog.open(ScreeningDialogComponent, {
           maxWidth: '95%',
           minWidth: '90%',
-
           data: {
             totalHits: response.totalHits,
             results: response.results || []
@@ -136,6 +140,7 @@ export class SupplierListComponent implements OnInit {
         });
       },
       error: (error) => {
+        this.isLoading = false;
         console.error('Error al realizar screening:', error);
       }
     });
