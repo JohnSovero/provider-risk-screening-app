@@ -2,96 +2,108 @@
 <div mat-dialog-content>
     <form [formGroup]="supplierForm">
 
+        <!-- Business Name -->
         <mat-form-field appearance="fill">
             <mat-label>Business Name</mat-label>
             <input matInput formControlName="businessName" required>
             <mat-error
                 *ngIf="supplierForm.get('businessName')?.touched && supplierForm.get('businessName')?.hasError('required')">
-                Business name is required
+                Please enter the business name. This field is required.
             </mat-error>
         </mat-form-field>
 
+        <!-- Trade Name -->
         <mat-form-field appearance="fill">
             <mat-label>Trade Name</mat-label>
             <input matInput formControlName="tradeName" required>
             <mat-error
                 *ngIf="supplierForm.get('tradeName')?.touched && supplierForm.get('tradeName')?.hasError('required')">
-                Trade name is required
+                Please enter the trade name. This field is required.
             </mat-error>
         </mat-form-field>
 
+        <!-- Tax ID -->
         <mat-form-field appearance="fill">
             <mat-label>Tax ID</mat-label>
             <input matInput formControlName="taxId" required>
             <mat-error *ngIf="supplierForm.get('taxId')?.touched && supplierForm.get('taxId')?.hasError('required')">
-                Tax ID is required
+                Please enter the tax ID. This field is required.
             </mat-error>
             <mat-error *ngIf="supplierForm.get('taxId')?.touched && supplierForm.get('taxId')?.hasError('pattern')">
-                Tax ID must be 11 digits
+                Tax ID must be exactly 11 digits (e.g., 12345678901).
             </mat-error>
         </mat-form-field>
 
+        <!-- Phone -->
         <mat-form-field appearance="fill">
             <mat-label>Phone</mat-label>
             <input matInput formControlName="phone" required>
             <mat-error *ngIf="supplierForm.get('phone')?.touched && supplierForm.get('phone')?.hasError('required')">
-                Phone is required
+                Please enter the phone number. This field is required.
+            </mat-error>
+            <mat-error *ngIf="supplierForm.get('phone')?.touched && supplierForm.get('phone')?.hasError('pattern')">
+                Phone number must be between 7 and 15 digits and can include spaces, dashes, or parentheses (e.g., +1
+                123-456-7890).
             </mat-error>
         </mat-form-field>
 
+        <!-- Email -->
         <mat-form-field appearance="fill">
             <mat-label>Email</mat-label>
             <input matInput formControlName="email" required>
             <mat-error *ngIf="supplierForm.get('email')?.touched && supplierForm.get('email')?.hasError('required')">
-                Email is required
+                Please enter an email address. This field is required.
             </mat-error>
             <mat-error *ngIf="supplierForm.get('email')?.touched && supplierForm.get('email')?.hasError('email')">
-                Invalid email format
+                Please enter a valid email address (e.g., user&#64;example.com).
             </mat-error>
         </mat-form-field>
 
+        <!-- Website -->
         <mat-form-field appearance="fill">
             <mat-label>Website</mat-label>
             <input matInput formControlName="website" required>
-        
-            <mat-error *ngIf="supplierForm.get('website')?.touched && supplierForm.get('website')?.hasError('required')">
-                El sitio web es obligatorio.
+            <mat-error
+                *ngIf="supplierForm.get('website')?.touched && supplierForm.get('website')?.hasError('required')">
+                Please enter the website URL. This field is required.
             </mat-error>
-        
             <mat-error *ngIf="supplierForm.get('website')?.touched && supplierForm.get('website')?.hasError('pattern')">
-                https://ejemplo.com
+                Website must start with http:// or https:// (e.g., https://example.com).
             </mat-error>
         </mat-form-field>
 
-
+        <!-- Address -->
         <mat-form-field appearance="fill">
             <mat-label>Address</mat-label>
             <input matInput formControlName="address" required>
             <mat-error
                 *ngIf="supplierForm.get('address')?.touched && supplierForm.get('address')?.hasError('required')">
-                Address is required
+                Please enter the address. This field is required.
             </mat-error>
         </mat-form-field>
 
-        <mat-form-field appearance="fill">
-            <mat-label>Country</mat-label>
-            <input matInput formControlName="country" required>
-            <mat-error
-                *ngIf="supplierForm.get('country')?.touched && supplierForm.get('country')?.hasError('required')">
-                Country is required
-            </mat-error>
-        </mat-form-field>
-
+        <!-- Country -->
+        <ng-country-select
+            [lang]="'en'"
+            [formControl]="countryControl"
+            (countrySelected)="handleSelection($event)"
+            [placeholder]="'Select a country'"
+        ></ng-country-select>
+        <mat-error *ngIf="supplierForm.get('country')?.touched && supplierForm.get('country')?.hasError('required')">
+            Please select a country. This field is required.
+        </mat-error>
+        
+        <!-- Annual Billing -->
         <mat-form-field appearance="fill">
             <mat-label>Annual Billing</mat-label>
             <input matInput formControlName="annualBilling" required>
             <mat-error
                 *ngIf="supplierForm.get('annualBilling')?.touched && supplierForm.get('annualBilling')?.hasError('required')">
-                Annual billing is required
+                Please enter the annual billing amount. This field is required.
             </mat-error>
             <mat-error
-                *ngIf="supplierForm.get('annualBilling')?.touched && supplierForm.get('annualBilling')?.hasError('min')">
-                Must be greater than or equal to 0
+                *ngIf="supplierForm.get('annualBilling')?.touched && supplierForm.get('annualBilling')?.hasError('pattern')">
+                Annual billing must be a valid number (e.g., 1,000.50).
             </mat-error>
         </mat-form-field>
 

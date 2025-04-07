@@ -66,7 +66,8 @@ export class SupplierListComponent implements OnInit {
 
   editSupplier(supplier: SupplierResponse): void {
     const dialogRef = this.dialog.open(AddEditSupplierDialogComponent, {
-      width: '400px',
+      maxWidth: '80%',
+      minWidth: '70%',
       data: { supplier: supplier, isNew: false },
     });
 
