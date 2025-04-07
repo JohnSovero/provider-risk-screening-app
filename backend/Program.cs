@@ -4,6 +4,7 @@ using backend.Infraestructure;
 using backend.Middleware;
 using backend.Services;
 using Microsoft.EntityFrameworkCore;
+using System.Text.Json.Serialization;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -11,6 +12,10 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers(options =>
 {
     options.Filters.Add<RestExceptionHandler>(); // Agregar RestExceptionHandler globalmente
+})
+.AddJsonOptions(jsonOptions =>
+{
+    jsonOptions.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
 });
 builder.Services.AddTransient<FirmaService>();
 builder.Services.AddMemoryCache();

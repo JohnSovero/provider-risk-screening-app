@@ -89,7 +89,7 @@
             (countrySelected)="handleSelection($event)"
             [placeholder]="'Select a country'"
         ></ng-country-select>
-        <mat-error *ngIf="supplierForm.get('country')?.touched && supplierForm.get('country')?.hasError('required')">
+        <mat-error *ngIf="countryControl.touched && countryControl.hasError('required')">
             Please select a country. This field is required.
         </mat-error>
         
