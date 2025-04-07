@@ -1,0 +1,102 @@
+/* Layout general */
+.form-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 24px;
+    margin-top: 24px;
+    padding: 0 8px;
+    justify-content: space-between;
+}
+
+.form-section {
+    flex: 1 1 45%;
+    min-width: 280px;
+    transition: transform 0.2s ease-in-out;
+}
+
+.form-section:hover {
+    transform: scale(1.01);
+}
+
+/* Material form fields */
+mat-form-field {
+    width: 100%;
+}
+
+mat-form-field.mat-form-field {
+    background-color: #f7fafc;
+    border-radius: 8px;
+    padding: 6px 12px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* Input general */
+input.mat-input-element {
+    font-size: 1rem;
+    font-weight: 500;
+    color: #2d3748;
+    background-color: #fff;
+}
+
+/* Etiquetas */
+mat-label {
+    font-weight: 600;
+    color: #4a5568;
+}
+
+/* Mensajes de error */
+mat-error {
+    color: #e53e3e;
+    font-size: 0.85rem;
+    font-weight: 500;
+    margin-top: 4px;
+}
+
+/* Bordes de campos con error */
+mat-form-field.ng-invalid.ng-touched .mat-mdc-form-field-flex {
+    border: 1px solid #e53e3e;
+    border-radius: 6px;
+}
+
+/* Botones */
+mat-dialog-actions {
+    margin-top: 32px;
+    padding: 0 8px;
+}
+
+button[mat-button], button[mat-raised-button] {
+    min-width: 120px;
+    font-weight: 600;
+    padding: 10px 16px;
+    border-radius: 6px;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+/* Botón de acción principal */
+button[mat-raised-button] {
+    background-color: #3182ce;
+    color: white;
+    border: none;
+}
+
+button[mat-raised-button]:hover:not(:disabled) {
+    background-color: #2b6cb0;
+    transform: translateY(-1px);
+}
+
+/* Botón deshabilitado */
+button[mat-raised-button]:disabled {
+    background-color: #edf2f7;
+    color: #cbd5e0;
+    cursor: not-allowed;
+}
+
+/* Encabezado del diálogo */
+h1[mat-dialog-title] {
+    font-size: 1.6rem;
+    font-weight: bold;
+    color: #2d3748;
+    align-self: center;
+    margin-bottom: 8px;
+    color: #4a90e2;
+}

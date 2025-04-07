@@ -1,4 +1,4 @@
-namespace backend.MIddleware
+namespace backend.Middleware
 {
     public class ValidationMiddleware(RequestDelegate next)
     {
@@ -8,15 +8,13 @@ namespace backend.MIddleware
         {
             if (context.Request.QueryString.HasValue)
             {
-                // Validación de parámetros
-                if (string.IsNullOrEmpty(context.Request.Query["nombre"]))
+                if (string.IsNullOrEmpty(context.Request.Query["name"]))
                 {
                     context.Response.StatusCode = StatusCodes.Status400BadRequest;
-                    await context.Response.WriteAsJsonAsync(new { error = "El parámetro 'nombre' es obligatorio." });
+                    await context.Response.WriteAsJsonAsync(new { error = "El parámetro 'name' es obligatorio." });
                     return;
                 }
             }
-
             await _next(context);
         }
     }

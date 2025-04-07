@@ -1,0 +1,16 @@
+/* Asegura que el overlay-container esté encima */
+.cdk-overlay-container {
+  z-index: 10000; /* o más, según necesites */
+}
+
+/* Targetea el panel MDC de mat-select */
+.entity-panel.mat-mdc-select-panel {
+  z-index: 10001 !important;
+  background-color: #ffffff !important;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+/* Opcional: fuerza fondo blanco a cada opción */
+.entity-panel .mat-mdc-option {
+  background-color: #fff !important;
+}

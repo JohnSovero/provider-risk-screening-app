@@ -1,14 +1,14 @@
+
 using System.Text.Json.Serialization;
 
-namespace backend.Models
-{
-    public class Firm
+namespace backend.Models{
+    public class WorldBankResponse
     {
+        [JsonPropertyName("web")]
+        public string? Web { get; set; }
+        
         [JsonPropertyName("firmName")]
         public string? FirmName { get; set; }
-
-        [JsonPropertyName("additionalInfo")]
-        public string? AdditionalInfo { get; set; }
 
         [JsonPropertyName("address")]
         public string? Address { get; set; }

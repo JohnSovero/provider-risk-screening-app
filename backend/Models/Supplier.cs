@@ -2,33 +2,32 @@ using System.Text.Json.Serialization;
 
 namespace backend.Models
 {
-    public class Provider{
-        [JsonPropertyName("id")]
+    public class Supplier{
         public Guid Id { get; set; }
 
         [JsonPropertyName("businessName")]
-        public string? BusinessName { get; set; }
+        public required string BusinessName { get; set; }
 
         [JsonPropertyName("tradeName")]
-        public string? TradeName { get; set; }
-        
+        public required string TradeName { get; set; }
+
         [JsonPropertyName("taxId")]
-        public string? TaxId { get; set; } // RUC (11 dígitos)
+        public required string TaxId { get; set; } // RUC (11 dígitos)
 
         [JsonPropertyName("phone")]
-        public string? Phone { get; set; }
+        public required string Phone { get; set; }
 
         [JsonPropertyName("email")]
-        public string? Email { get; set; }
+        public required string Email { get; set; }
 
         [JsonPropertyName("website")]
-        public string? Website { get; set; }
+        public required string Website { get; set; }
 
         [JsonPropertyName("address")]
-        public string? Address { get; set; }
+        public required string Address { get; set; }
 
         [JsonPropertyName("country")]
-        public string? Country { get; set; }
+        public required string Country { get; set; }
 
         [JsonPropertyName("annualBilling")]
         public decimal AnnualBilling { get; set; }
