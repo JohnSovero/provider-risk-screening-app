@@ -1,0 +1,99 @@
+<h1 mat-dialog-title>{{ data.isNew ? 'Add Supplier' : 'Edit Supplier' }}</h1>
+<div mat-dialog-content>
+    <form [formGroup]="supplierForm">
+
+        <mat-form-field appearance="fill">
+            <mat-label>Business Name</mat-label>
+            <input matInput formControlName="businessName" required>
+            <mat-error
+                *ngIf="supplierForm.get('businessName')?.touched && supplierForm.get('businessName')?.hasError('required')">
+                Business name is required
+            </mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="fill">
+            <mat-label>Trade Name</mat-label>
+            <input matInput formControlName="tradeName" required>
+            <mat-error
+                *ngIf="supplierForm.get('tradeName')?.touched && supplierForm.get('tradeName')?.hasError('required')">
+                Trade name is required
+            </mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="fill">
+            <mat-label>Tax ID</mat-label>
+            <input matInput formControlName="taxId" required>
+            <mat-error *ngIf="supplierForm.get('taxId')?.touched && supplierForm.get('taxId')?.hasError('required')">
+                Tax ID is required
+            </mat-error>
+            <mat-error *ngIf="supplierForm.get('taxId')?.touched && supplierForm.get('taxId')?.hasError('pattern')">
+                Tax ID must be 11 digits
+            </mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="fill">
+            <mat-label>Phone</mat-label>
+            <input matInput formControlName="phone" required>
+            <mat-error *ngIf="supplierForm.get('phone')?.touched && supplierForm.get('phone')?.hasError('required')">
+                Phone is required
+            </mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="fill">
+            <mat-label>Email</mat-label>
+            <input matInput formControlName="email" required>
+            <mat-error *ngIf="supplierForm.get('email')?.touched && supplierForm.get('email')?.hasError('required')">
+                Email is required
+            </mat-error>
+            <mat-error *ngIf="supplierForm.get('email')?.touched && supplierForm.get('email')?.hasError('email')">
+                Invalid email format
+            </mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="fill">
+            <mat-label>Website</mat-label>
+            <input matInput formControlName="website" required>
+            <mat-error
+                *ngIf="supplierForm.get('website')?.touched && supplierForm.get('website')?.hasError('required')">
+                Website is required
+            </mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="fill">
+            <mat-label>Address</mat-label>
+            <input matInput formControlName="address" required>
+            <mat-error
+                *ngIf="supplierForm.get('address')?.touched && supplierForm.get('address')?.hasError('required')">
+                Address is required
+            </mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="fill">
+            <mat-label>Country</mat-label>
+            <input matInput formControlName="country" required>
+            <mat-error
+                *ngIf="supplierForm.get('country')?.touched && supplierForm.get('country')?.hasError('required')">
+                Country is required
+            </mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="fill">
+            <mat-label>Annual Billing</mat-label>
+            <input matInput formControlName="annualBilling" required>
+            <mat-error
+                *ngIf="supplierForm.get('annualBilling')?.touched && supplierForm.get('annualBilling')?.hasError('required')">
+                Annual billing is required
+            </mat-error>
+            <mat-error
+                *ngIf="supplierForm.get('annualBilling')?.touched && supplierForm.get('annualBilling')?.hasError('min')">
+                Must be greater than or equal to 0
+            </mat-error>
+        </mat-form-field>
+
+    </form>
+</div>
+
+<div mat-dialog-actions align="end">
+    <button mat-button (click)="cancel()">Cancel</button>
+    <button mat-raised-button color="primary" (click)="save()" [disabled]="!supplierForm.valid">Save</button>
+</div>

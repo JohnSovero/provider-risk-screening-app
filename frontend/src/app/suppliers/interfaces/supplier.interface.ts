@@ -1,11 +1,14 @@
 
 export interface SupplierResponse {
-    id: number;
-    name: string;
-    address: string;
-    contactPerson: string;
-    phoneNumber: string;
+    id: string;
+    businessName: string;
+    tradeName: string;
+    taxId: string;
+    phone: string;
     email: string;
-    createdAt: Date;
-    updatedAt: Date;
+    website: string;
+    address: string;
+    country: string;
+    annualBilling: number;
+    lastEdited: string;
 }

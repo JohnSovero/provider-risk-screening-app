@@ -1,17 +1,14 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MaterialModule } from '../material/material.module';
-import { SupplierListComponent } from './supplier-list/supplier-list.component';
-import { ScreeningDialogComponent } from './screening-dialog/screening-dialog.component';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
-  declarations: [
-    SupplierListComponent,
-    ScreeningDialogComponent,
-  ],
+  declarations: [],
   imports: [
     CommonModule,
     MaterialModule,
+    HttpClientModule,
   ],
 })
 export class SuppliersModule { }

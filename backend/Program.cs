@@ -26,8 +26,19 @@ builder.Services.AddHttpClient();
 builder.Services.AddEndpointsApiExplorer();
 SwaggerConfig.AddSwaggerDocumentation(builder.Services);
 AuthenticationConfig.AddCustomAuthentication(builder.Services);
-
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowAll", policy =>
+    {
+        policy.AllowAnyOrigin()    // Permite cualquier origen
+              .AllowAnyHeader()    // Permite cualquier cabecera
+              .AllowAnyMethod();   // Permite cualquier método HTTP (GET, POST, PUT, DELETE, etc.)
+    });
+});
 var app = builder.Build();
+
+// Usar CORS
+app.UseCors("AllowAll");
 
 // Middleware
 app.UseSwagger();

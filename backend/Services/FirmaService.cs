@@ -42,8 +42,6 @@ namespace backend.Services
             }
             catch (Exception ex)
             {
-                // Maneja excepciones como problemas de conexión, timeout, etc.
-                // Loguea el error o maneja según lo necesario
                 Console.WriteLine($"Error al obtener firmas: {ex.Message}");
                 return new List<Firm>();
             }

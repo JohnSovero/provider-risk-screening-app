@@ -1,10 +1,21 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, Inject, OnInit } from '@angular/core';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MaterialModule } from '../../material/material.module';
+import { MatListModule } from '@angular/material/list';
+import { FormsModule } from '@angular/forms';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-screening-dialog',
-  imports: [],
+  imports: [
+    CommonModule,
+    MaterialModule,
+    MatListModule,
+    FormsModule,
+    MatProgressSpinnerModule,
+  ],
   templateUrl: './screening-dialog.component.html',
   styleUrl: './screening-dialog.component.css'
 })
