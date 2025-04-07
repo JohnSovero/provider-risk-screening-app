@@ -21,6 +21,7 @@ export class SupplierListComponent implements OnInit {
   displayedColumns: string[] = ['businessName', 'tradeName', 'taxId', 'phone', 'email', 'website', 'address', 'country', 'annualBilling', 'lastEdited', 'actions'];
   dataSource = new MatTableDataSource<SupplierResponse>([]);
   currentSupplier: SupplierResponse = { id: '', businessName: '', tradeName: '', taxId: '', phone: '', email: '', website: '', address: '', country: '', annualBilling: 0, lastEdited: '' };
+  selectedEntities: { [supplierId: string]: string[] } = {};
 
   constructor(
     private supplierService: SupplierService,
@@ -41,6 +42,7 @@ export class SupplierListComponent implements OnInit {
 
   openAddSupplierDialog(): void {
     this.currentSupplier = { id: '', businessName: '', tradeName: '', taxId: '', phone: '', email: '', website: '', address: '', country: '', annualBilling: 0, lastEdited: '' };
+
     const dialogRef = this.dialog.open(AddEditSupplierDialogComponent, {
       width: '400px',
       data: { supplier: this.currentSupplier, isNew: true },
@@ -54,6 +56,7 @@ export class SupplierListComponent implements OnInit {
   }
 
   addSupplier(supplier: SupplierResponse) {
+    console.log('Adding supplier:', supplier);
     this.supplierService.createSupplier(supplier).subscribe({
       next: (supplier) => {
         this.dataSource.data = [...this.dataSource.data, supplier];
@@ -105,8 +108,12 @@ export class SupplierListComponent implements OnInit {
     });
   }
 
-  scrappedSupplier(supplier: SupplierResponse): void {
-    this.scrapperService.getScrappedByName(supplier.businessName).subscribe({
+  scrappedSupplier(supplier: SupplierResponse, entidades: string[]): void {
+    if(entidades.length === 0) {
+      alert('No se seleccionaron entidades para el scrapping');
+      return;
+    }
+    this.scrapperService.getScrappedByName(supplier.businessName, entidades).subscribe({
       next: (response) => {
         console.log('Screening results:', response);
         this.dialog.open(ScreeningDialogComponent, {

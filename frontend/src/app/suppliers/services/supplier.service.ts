@@ -3,6 +3,7 @@ import { inject, Injectable} from "@angular/core";
 import { Observable, map } from "rxjs";
 import { environment } from "../../../environments/environment";
 import { SupplierResponse } from "../interfaces/supplier.interface";
+import { Console } from "node:console";
 
 @Injectable({
     providedIn: 'root'
@@ -23,6 +24,7 @@ export class SupplierService {
       )
     }
     createSupplier(supplier: SupplierResponse): Observable<SupplierResponse> {
+        console.log("SupplierService: createSupplier called with supplier:", supplier);
         return this.http.post<SupplierResponse>(`${environment.apiURL}/supplier`, supplier)
             .pipe(
                 map((createdSupplier: SupplierResponse) => {

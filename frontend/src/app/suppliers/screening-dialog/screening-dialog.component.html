@@ -4,47 +4,90 @@
 </div>
 
 <mat-dialog-content>
-    <table mat-table [dataSource]="screeningResults" class="mat-elevation-z8"
-        *ngIf="screeningResults.length > 0; else noResults">
+    <ng-container *ngIf="screeningResults.length > 0; else noResults">
+        <ng-container *ngFor="let source of ['WorldBank', 'OFAC']">
+            <ng-container *ngIf="hasSource(source)">
+                <h3>{{ source }} Results</h3>
 
-        <ng-container matColumnDef="firmName">
-            <th mat-header-cell *matHeaderCellDef> Firm Name </th>
-            <td mat-cell *matCellDef="let element"> {{element.firmName}} </td>
+                <table mat-table [dataSource]="getFilteredResults(source)" class="mat-elevation-z8">
+
+                    <ng-container matColumnDef="firmName">
+                        <th mat-header-cell *matHeaderCellDef> Name </th>
+                        <td mat-cell *matCellDef="let element"> {{ element.firmName }} </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="address">
+                        <th mat-header-cell *matHeaderCellDef> Address </th>
+                        <td mat-cell *matCellDef="let element"> {{ element.address }} </td>
+                    </ng-container>
+
+                    <!-- WorldBank-specific columns -->
+                    <ng-container *ngIf="source === 'WorldBank'">
+                        <ng-container matColumnDef="country">
+                            <th mat-header-cell *matHeaderCellDef> Country </th>
+                            <td mat-cell *matCellDef="let element"> {{ element.country }} </td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="fromDate">
+                            <th mat-header-cell *matHeaderCellDef> From Date </th>
+                            <td mat-cell *matCellDef="let element"> {{ element.fromDate }} </td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="toDate">
+                            <th mat-header-cell *matHeaderCellDef> To Date </th>
+                            <td mat-cell *matCellDef="let element"> {{ element.toDate }} </td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="grounds">
+                            <th mat-header-cell *matHeaderCellDef> Grounds </th>
+                            <td mat-cell *matCellDef="let element"> {{ element.grounds }} </td>
+                        </ng-container>
+
+                        <tr mat-header-row
+                            *matHeaderRowDef="['firmName', 'address', 'country', 'fromDate', 'toDate', 'grounds']"></tr>
+                        <tr mat-row
+                            *matRowDef="let row; columns: ['firmName', 'address', 'country', 'fromDate', 'toDate', 'grounds']">
+                        </tr>
+                    </ng-container>
+
+                    <!-- OFAC-specific columns -->
+                    <ng-container *ngIf="source === 'OFAC'">
+                        <ng-container matColumnDef="type">
+                            <th mat-header-cell *matHeaderCellDef> Type </th>
+                            <td mat-cell *matCellDef="let element"> {{ element.type }} </td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="program">
+                            <th mat-header-cell *matHeaderCellDef> Program </th>
+                            <td mat-cell *matCellDef="let element"> {{ element.program }} </td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="list">
+                            <th mat-header-cell *matHeaderCellDef> List </th>
+                            <td mat-cell *matCellDef="let element"> {{ element.list }} </td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="score">
+                            <th mat-header-cell *matHeaderCellDef> Score </th>
+                            <td mat-cell *matCellDef="let element"> {{ element.score }} </td>
+                        </ng-container>
+
+                        <tr mat-header-row
+                            *matHeaderRowDef="['firmName', 'address', 'type', 'program', 'list', 'score']"></tr>
+                        <tr mat-row
+                            *matRowDef="let row; columns: ['firmName', 'address', 'type', 'program', 'list', 'score']">
+                        </tr>
+                    </ng-container>
+
+                </table>
+                <br>
+            </ng-container>
         </ng-container>
-
-        <ng-container matColumnDef="address">
-            <th mat-header-cell *matHeaderCellDef> Address </th>
-            <td mat-cell *matCellDef="let element"> {{element.address}} </td>
-        </ng-container>
-
-        <ng-container matColumnDef="country">
-            <th mat-header-cell *matHeaderCellDef> Country </th>
-            <td mat-cell *matCellDef="let element"> {{element.country}} </td>
-        </ng-container>
-
-        <ng-container matColumnDef="fromDate">
-            <th mat-header-cell *matHeaderCellDef> From Date </th>
-            <td mat-cell *matCellDef="let element"> {{element.fromDate}} </td>
-        </ng-container>
-
-        <ng-container matColumnDef="toDate">
-            <th mat-header-cell *matHeaderCellDef> To Date </th>
-            <td mat-cell *matCellDef="let element"> {{element.toDate}} </td>
-        </ng-container>
-
-        <ng-container matColumnDef="grounds">
-            <th mat-header-cell *matHeaderCellDef> Grounds </th>
-            <td mat-cell *matCellDef="let element"> {{element.grounds}} </td>
-        </ng-container>
-
-        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-    </table>
+    </ng-container>
 
     <ng-template #noResults>
         <p>No se encontraron coincidencias para esta empresa.</p>
     </ng-template>
-
 </mat-dialog-content>
 
 <mat-dialog-actions align="end">

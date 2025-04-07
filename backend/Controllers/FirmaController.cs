@@ -12,7 +12,7 @@ public enum Paginas
 
 namespace backend.Controllers{
     [ApiController]
-    [Route("[controller]")]
+    [Route("scrapper")]
     [Authorize]
     public class FirmaController : ControllerBase
     {

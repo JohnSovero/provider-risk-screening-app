@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace backend.Controllers{
     [ApiController]
-    [Route("[controller]")]
+    [Route("supplier")]
     [Authorize]
     public class SupplierController(ISupplierService service) : ControllerBase{
         private readonly ISupplierService _service = service;
