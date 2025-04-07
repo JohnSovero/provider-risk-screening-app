@@ -18,11 +18,11 @@ export class ScreeningDialogComponent implements OnInit {
   displayedColumns: string[] = [];
 
   constructor(
-    @Inject(MAT_DIALOG_DATA) public data: { totalHits: number, resultados: ScrappedResponse[] }
+    @Inject(MAT_DIALOG_DATA) public data: { totalHits: number, results: ScrappedResponse[] }
   ) { }
 
   ngOnInit(): void {
-    const rawResults = this.data.resultados;
+    const rawResults = this.data.results;
 
     this.screeningResults = rawResults.map((item: any) => {
       if (item.web === 'WorldBank') {

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { MatInputModule } from '@angular/material/input';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
@@ -16,6 +16,7 @@ import { ScreeningDialogComponent } from '../screening-dialog/screening-dialog.c
   imports: [CommonModule, MatTableModule, MatDialogModule, MatFormFieldModule, MatInputModule, FormsModule, MatSelectModule],
   templateUrl: './supplier-list.component.html',
   styleUrls: ['./supplier-list.component.css'],
+  encapsulation: ViewEncapsulation.None
 })
 export class SupplierListComponent implements OnInit {
   displayedColumns: string[] = ['businessName', 'tradeName', 'taxId', 'phone', 'email', 'website', 'address', 'country', 'annualBilling', 'lastEdited', 'actions'];
@@ -31,8 +32,10 @@ export class SupplierListComponent implements OnInit {
 
   ngOnInit(): void {
     this.supplierService.getAllSuppliers().subscribe({
-      next: (suppliers: SupplierResponse[]) => {
+      next: (suppliers: SupplierResponse[]) => {  
+        suppliers.sort((a, b) => new Date(b.lastEdited).getTime() - new Date(a.lastEdited).getTime());
         this.dataSource.data = suppliers;
+
       },
       error: (error) => {
         console.error('Error al obtener proveedores:', error);
@@ -44,7 +47,8 @@ export class SupplierListComponent implements OnInit {
     this.currentSupplier = { id: '', businessName: '', tradeName: '', taxId: '', phone: '', email: '', website: '', address: '', country: '', annualBilling: 0, lastEdited: '' };
 
     const dialogRef = this.dialog.open(AddEditSupplierDialogComponent, {
-      width: '400px',
+      maxWidth: '95%',
+      minWidth: '95%',
       data: { supplier: this.currentSupplier, isNew: true },
     });
 
@@ -69,8 +73,8 @@ export class SupplierListComponent implements OnInit {
 
   editSupplier(supplier: SupplierResponse): void {
     const dialogRef = this.dialog.open(AddEditSupplierDialogComponent, {
-      maxWidth: '80%',
-      minWidth: '70%',
+      maxWidth: '95%',
+      minWidth: '95%',
       data: { supplier: supplier, isNew: false },
     });
 
@@ -122,7 +126,7 @@ export class SupplierListComponent implements OnInit {
 
           data: {
             totalHits: response.totalHits,
-            resultados: response.resultados || []
+            results: response.results || []
           }
         });
       },

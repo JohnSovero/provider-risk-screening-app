@@ -16,13 +16,19 @@ export class ScrapperService {
         console.log("ScrapperService: getScrappedByName called with name:", name, "and pages:", paginas);
 
         let params = new HttpParams()
-            .set('nombre', name);
+            .set('name', name);
 
         paginas.forEach(pagina => {
-            params = params.append('paginas', pagina); // agrega múltiples 'paginas' al query
+            params = params.append('pages', pagina); // agrega múltiples 'paginas' al query
         });
 
-        return this.http.get<ScrappedResponse>(`${environment.apiURL}/scrapper`, { params })
+        // Codificar las credenciales en Base64
+        const credentials = btoa('admin:admin'); // Usuario: admin, Contraseña: admin
+        const headers = {
+            Authorization: `Basic ${credentials}` // Agregar encabezado de autenticación básica
+        };
+
+        return this.http.get<ScrappedResponse>(`${environment.apiURL}/scrapper`, { params, headers })
             .pipe(
                 map((response: ScrappedResponse) => {
                     return response;

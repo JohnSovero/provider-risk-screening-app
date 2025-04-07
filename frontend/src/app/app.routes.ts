@@ -3,6 +3,6 @@ import { SupplierListComponent } from './suppliers/supplier-list/supplier-list.c
 import { ScreeningDialogComponent } from './suppliers/screening-dialog/screening-dialog.component';
 
 export const routes: Routes = [
-    { path: 'supplier', component: SupplierListComponent },
+    { path: '', component: SupplierListComponent },
     { path: 'screening', component: ScreeningDialogComponent }
 ];

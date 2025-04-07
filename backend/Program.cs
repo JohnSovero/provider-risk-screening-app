@@ -51,6 +51,8 @@ RateLimitConfig.AddRateLimiting(builder.Services);
 
 var app = builder.Build();
 
+// CORS
+app.UseCors("AllowAll");
 // Swagger
 app.UseSwagger();
 app.UseSwaggerUI();
@@ -63,8 +65,6 @@ app.UseAuthentication();
 app.UseIpRateLimiting();
 app.UseAuthorization();
 
-// CORS
-app.UseCors("AllowAll");
 
 // Map controllers
 app.MapControllers();

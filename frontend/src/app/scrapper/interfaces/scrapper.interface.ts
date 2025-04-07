@@ -1,6 +1,6 @@
 export interface ScrappedResponse {
     totalHits: number;
-    resultados: (WorldBankResult | OFACResult)[];
+    results: (WorldBankResult | OFACResult)[];
 }
 
 export interface WorldBankResult {

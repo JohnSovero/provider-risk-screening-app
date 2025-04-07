@@ -14,23 +14,23 @@ namespace backend.Services{
                     "WorldBank" => await GetFromWorldBankAsync(name),
                     "OFAC" => await GetFromOFACAsync(name),
                     "LeaksDatabase" => new List<object>(),
-                    _ => []
+                    _ => new List<object>()
                 };
             }
             catch (PuppeteerException ex)
             {
                 Console.WriteLine($"Puppeteer error: {ex.Message}");
-                return [];
+                return new List<object>();
             }
             catch (TimeoutException ex)
             {
                 Console.WriteLine($"Timeout: {ex.Message}");
-                return [];
+                return new List<object>();
             }
             catch (Exception ex)
             {
                 Console.WriteLine($"General error: {ex.Message}");
-                return [];
+                return new List<object>();
             }
         }
 
@@ -74,21 +74,21 @@ namespace backend.Services{
             return resultList?.Cast<object>().ToList() ?? new List<object>();
         }
 
-        private static async Task EnsureBrowserIsDownloaded()
+        private async Task EnsureBrowserIsDownloaded()
         {
             await new BrowserFetcher().DownloadAsync();
         }
 
-        private static async Task NavigateToPageAsync(IPage page, string url, int timeout = 30000)
+        private async Task NavigateToPageAsync(IPage page, string url, int timeout = 30000)
         {
             await page.GoToAsync(url, new NavigationOptions
             {
                 Timeout = timeout,
-                WaitUntil = [WaitUntilNavigation.Networkidle2]
+                WaitUntil = new[] { WaitUntilNavigation.Networkidle2 }
             });
         }
 
-        private static async Task WaitForStableResultsAsync(IPage page, string selector)
+        private async Task WaitForStableResultsAsync(IPage page, string selector)
         {
             await page.EvaluateFunctionAsync(@"(selector) => new Promise(resolve => {
                 let lastCount = -1;
@@ -109,7 +109,7 @@ namespace backend.Services{
             })", selector);
         }
 
-        private static string GetWorldBankScript()
+        private string GetWorldBankScript()
         {
             return @"() => {
                 const rows = document.querySelectorAll('#k-debarred-firms .k-grid-content table tbody tr');
@@ -128,7 +128,7 @@ namespace backend.Services{
             }";
         }
 
-        private static string GetOFACScript()
+        private string GetOFACScript()
         {
             return @"() => {
                 const rows = document.querySelectorAll('#gvSearchResults tr');
