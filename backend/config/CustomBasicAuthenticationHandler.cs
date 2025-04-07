@@ -17,14 +17,14 @@ namespace backend.config
 
         protected override Task<AuthenticateResult> HandleAuthenticateAsync()
         {
-            if (!Request.Headers.ContainsKey("Authorization"))
+            if (!Request.Headers.TryGetValue("Authorization", out Microsoft.Extensions.Primitives.StringValues value))
             {
                 return Task.FromResult(AuthenticateResult.Fail("Missing Authorization Header"));
             }
 
             try
             {
-                var authorizationHeader = Request.Headers["Authorization"].FirstOrDefault();
+                var authorizationHeader = value.FirstOrDefault();
                 if (string.IsNullOrEmpty(authorizationHeader))
                 {
                     return Task.FromResult(AuthenticateResult.Fail("Missing or invalid Authorization Header"));
@@ -38,7 +38,6 @@ namespace backend.config
                 var username = credentials[0];
                 var password = credentials[1];
 
-                // Validar credenciales (reemplazar con lógica real)
                 if (username == "admin" && password == "admin")
                 {
                     var claims = new[] { new Claim(ClaimTypes.Name, username) };

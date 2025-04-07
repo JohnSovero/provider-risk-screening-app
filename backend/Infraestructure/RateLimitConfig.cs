@@ -13,8 +13,7 @@ namespace backend.Infraestructure
                options.StackBlockedRequests = false;
                options.GeneralRules = new List<RateLimitRule>
                {
-                    new RateLimitRule
-                    {
+                    new() {
                         Endpoint = "*",
                         Period = "1m",
                         Limit = 20

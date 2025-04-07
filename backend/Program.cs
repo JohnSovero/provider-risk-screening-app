@@ -8,49 +8,64 @@ using System.Text.Json.Serialization;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Services
-builder.Services.AddControllers(options =>
-{
-    options.Filters.Add<RestExceptionHandler>(); // Agregar RestExceptionHandler globalmente
-})
-.AddJsonOptions(jsonOptions =>
-{
-    jsonOptions.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
-});
-builder.Services.AddTransient<FirmaService>();
+// Controllers and JSON serialization
+builder.Services.AddControllers(options => options.Filters.Add<RestExceptionHandler>())
+            .AddJsonOptions(jsonOptions =>
+                jsonOptions.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter()));
+
+// Cache and Rate Limiting
 builder.Services.AddMemoryCache();
 builder.Services.AddInMemoryRateLimiting();
 builder.Services.AddSingleton<IRateLimitConfiguration, RateLimitConfiguration>();
-builder.Services.AddDbContext<AppDbContext>(options =>
+
+// Configuration of Database
+builder.Services.AddDbContext<AppDbContext>(options => 
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
-builder.Services.AddScoped<ISupplierService, SupplierService>();
-
-RateLimitConfig.AddRateLimiting(builder.Services);
+// Services of the application
 builder.Services.AddHttpClient();
 builder.Services.AddEndpointsApiExplorer();
+
+// Configuration of swagger
 SwaggerConfig.AddSwaggerDocumentation(builder.Services);
+
+// Configuration of authentication
 AuthenticationConfig.AddCustomAuthentication(builder.Services);
+
+builder.Services.AddTransient<ScrapperService>();
+builder.Services.AddScoped<ISupplierService, SupplierService>();
+
+// Configuration of CORS
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowAll", policy =>
     {
-        policy.AllowAnyOrigin()    // Permite cualquier origen
-              .AllowAnyHeader()    // Permite cualquier cabecera
-              .AllowAnyMethod();   // Permite cualquier método HTTP (GET, POST, PUT, DELETE, etc.)
+        policy.AllowAnyOrigin()
+              .AllowAnyHeader()
+              .AllowAnyMethod();
     });
 });
+
+// Configuration of Rate Limiting
+RateLimitConfig.AddRateLimiting(builder.Services);
+
 var app = builder.Build();
 
-// Usar CORS
-app.UseCors("AllowAll");
-
-// Middleware
+// Swagger
 app.UseSwagger();
 app.UseSwaggerUI();
+
+// Middleware for error handling
 app.UseMiddleware<ValidationMiddleware>();
+
+// Configuration of authentication and authorization
 app.UseAuthentication();
 app.UseIpRateLimiting();
 app.UseAuthorization();
+
+// CORS
+app.UseCors("AllowAll");
+
+// Map controllers
 app.MapControllers();
 app.Run();

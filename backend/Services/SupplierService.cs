@@ -4,12 +4,8 @@ using backend.Models;
 using Microsoft.EntityFrameworkCore;
 
 namespace backend.Services{
-    public class SupplierService : ISupplierService{
-        private readonly AppDbContext _context;
-
-        public SupplierService(AppDbContext context){
-            _context = context;
-        }
+    public class SupplierService(AppDbContext context) : ISupplierService{
+        private readonly AppDbContext _context = context;
 
         // Method that retrieves all suppliers from the database
         public async Task<IEnumerable<Supplier>> GetAllSuppliers(){   
@@ -19,10 +15,7 @@ namespace backend.Services{
         // Method that retrieves a supplier by its ID
         public async Task<Supplier?> GetSupplierById(Guid id){
             var supplier = await _context.Suppliers.FindAsync(id);
-            if(supplier == null) {
-                throw new ResourceNotFoundException("Proveedor no encontrado.");
-            }
-            return await _context.Suppliers.FindAsync(id);
+            return supplier == null ? throw new ResourceNotFoundException("Proveedor no encontrado.") : await _context.Suppliers.FindAsync(id);
         }
 
         // Method to create a new supplier
@@ -84,9 +77,7 @@ namespace backend.Services{
         // Method to delete a supplier by its ID
         public async Task<bool> DeleteSupplier(Guid id)
         {
-            var supplier = await _context.Suppliers.FindAsync(id);
-            if (supplier == null) throw new ResourceNotFoundException("Proveedor no encontrado.");
-
+            var supplier = await _context.Suppliers.FindAsync(id) ?? throw new ResourceNotFoundException("Proveedor no encontrado.");
             _context.Suppliers.Remove(supplier);
             await _context.SaveChangesAsync();
             return true;

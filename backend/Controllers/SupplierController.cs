@@ -38,8 +38,7 @@ namespace backend.Controllers{
 
         // Endpoint to delete a Supplier
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteSupplier(Guid id)
-        {
+        public async Task<IActionResult> DeleteSupplier(Guid id){
             var deleted = await _service.DeleteSupplier(id);
             return deleted ? NoContent() : NotFound();
         }
